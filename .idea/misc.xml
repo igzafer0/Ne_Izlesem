@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ne_izlesem/app/src/main/res/layout/activity_main.xml" value="0.1265625" />
+        <entry key="..\:/ne_izlesem/app/src/main/res/layout/fragment_popular_row.xml" value="0.22826086956521738" />
+        <entry key="..\:/ne_izlesem/app/src/main/res/layout/fragment_vizyondakiler_row.xml" value="0.1265625" />
+        <entry key="..\:/ne_izlesem/app/src/main/res/layout/movies_row_style.xml" value="0.8" />
         <entry key="..\:/ne_izlesem/app/src/main/res/layout/popular_movies_row.xml" value="0.1265625" />
       </map>
     </option>

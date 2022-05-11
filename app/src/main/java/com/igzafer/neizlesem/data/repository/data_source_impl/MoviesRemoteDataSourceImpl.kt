@@ -5,8 +5,12 @@ import com.igzafer.neizlesem.data.model.BaseMovieModel
 import com.igzafer.neizlesem.data.repository.data_source.MoviesRemoteDataSource
 import retrofit2.Response
 
-class MoviesRemoteDataSourceImpl(private val apiService: ApiService):MoviesRemoteDataSource {
+class MoviesRemoteDataSourceImpl(private val apiService: ApiService) : MoviesRemoteDataSource {
     override suspend fun getPopularMovies(page: Int): Response<BaseMovieModel> {
-        return apiService.getPopularMovies(page=page)
+        return apiService.getPopularMovies(page = page)
+    }
+
+    override suspend fun getNowPlayingMovies(page: Int): Response<BaseMovieModel> {
+        return apiService.getNowPlayingMovie(page = page)
     }
 }

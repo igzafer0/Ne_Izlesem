@@ -11,6 +11,10 @@ class MovieRepositoryImpl(private val remoteDataSource: MoviesRemoteDataSource):
         return responseToResource(remoteDataSource.getPopularMovies(page))
     }
 
+    override suspend fun getNowPlayingMovies(page: Int): Resource<BaseMovieModel> {
+        return responseToResource(remoteDataSource.getNowPlayingMovies(page))
+    }
+
     private fun responseToResource(response: Response<BaseMovieModel>): Resource<BaseMovieModel> {
         if (response.isSuccessful) {
             response.body()?.let {

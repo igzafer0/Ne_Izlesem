@@ -7,16 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.igzafer.neizlesem.data.model.MoviesModel
-import com.igzafer.neizlesem.databinding.PopularMoviesRowBinding
+import com.igzafer.neizlesem.databinding.MoviesRowStyleBinding
 
-class PopularMoviesAdapter :
-    PagingDataAdapter<MoviesModel, PopularMoviesAdapter.ViewHolder>(DiffUtilCallBack()) {
+class NowPlayingMoviesRowAdapter  :
+    PagingDataAdapter<MoviesModel, NowPlayingMoviesRowAdapter.ViewHolder>(DiffUtilCallBack()) {
 
 
-    inner class ViewHolder(val binding: PopularMoviesRowBinding) :
+    inner class ViewHolder(val binding: MoviesRowStyleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MoviesModel) {
-            binding.twTitle.text = data.title
             val posterPath = "https://image.tmdb.org/t/p/w500" + data.posterPath
             Glide.with(binding.imPoster.context).load(posterPath)
                 .into(binding.imPoster)
@@ -29,7 +28,7 @@ class PopularMoviesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            PopularMoviesRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MoviesRowStyleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
@@ -50,4 +49,5 @@ class PopularMoviesAdapter :
         }
 
     }
+
 }

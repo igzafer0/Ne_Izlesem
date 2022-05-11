@@ -4,33 +4,33 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.paging.*
 import com.igzafer.neizlesem.data.model.MoviesModel
+import com.igzafer.neizlesem.domain.usecase.GetNowPlayingMovieUseCase
 import com.igzafer.neizlesem.domain.usecase.GetPopularMoviesUseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 import java.io.IOException
 
-class PopularMoviesViewModel(
+class NowPlayingMoviesViewModel(
     private val app: Application,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    private val getNowPlayingMovieUseCase: GetNowPlayingMovieUseCase
 ) : AndroidViewModel(app) {
-    fun getPopularMoviesList(): Flow<PagingData<MoviesModel>> {
+    fun getNowPlayingMoviesList(): Flow<PagingData<MoviesModel>> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
-                PopularMoviePagingSource()
+                NowPlayingMoviesPagingSource()
             }).flow
     }
-
     private val TMDB_STARTING_PAGE_INDEX = 1
 
-    inner class PopularMoviePagingSource() : PagingSource<Int, MoviesModel>() {
+    inner class NowPlayingMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
         override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
             return state.anchorPosition
         }
 
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
             val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
-            val response = getPopularMoviesUseCase.execute(page = pageIndex)
+            val response = getNowPlayingMovieUseCase.execute(page = pageIndex)
             val movies = response.data?.moviesModels
             if (movies == null) {
                 return LoadResult.Error(Throwable("liste boş"))

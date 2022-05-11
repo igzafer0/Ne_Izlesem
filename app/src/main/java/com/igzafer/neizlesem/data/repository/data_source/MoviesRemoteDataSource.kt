@@ -5,4 +5,5 @@ import retrofit2.Response
 
 interface MoviesRemoteDataSource {
     suspend fun getPopularMovies(page: Int): Response<BaseMovieModel>
+    suspend fun getNowPlayingMovies(page: Int): Response<BaseMovieModel>
 }
