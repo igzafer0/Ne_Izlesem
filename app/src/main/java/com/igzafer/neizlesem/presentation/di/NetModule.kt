@@ -2,6 +2,7 @@ package com.igzafer.neizlesem.presentation.di
 
 import com.igzafer.neizlesem.BuildConfig
 import com.igzafer.neizlesem.data.api.ApiService
+import com.igzafer.neizlesem.data.util.ConnectivityInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -20,6 +22,12 @@ class NetModule {
     }
     val client = OkHttpClient.Builder().apply {
         this.addInterceptor(interceptor)
+        this.retryOnConnectionFailure(true)
+        this.callTimeout(5,TimeUnit.SECONDS)
+        this.connectTimeout(5,TimeUnit.SECONDS)
+        this.readTimeout(5,TimeUnit.SECONDS)
+        this.writeTimeout(5,TimeUnit.SECONDS)
+
     }.build()
 
     @Singleton

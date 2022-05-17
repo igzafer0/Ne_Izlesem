@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homePageFragment"
+        android:icon="@drawable/ic_popcorn"
+        android:contentDescription="Home"
+        android:iconTint="@color/color_selector"
+
+        android:title=""/>
+    <item
+        android:id="@+id/searchPageFragment"
+
+        android:icon="@drawable/ic_search"
+        android:contentDescription="Search"
+        android:iconTint="@color/color_selector"
+
+        android:title=""/>
+    <item
+        android:id="@+id/accountPageFragment"
+
+        android:icon="@drawable/ic_account"
+        android:contentDescription="Account"
+        android:iconTint="@color/color_selector"
+
+
+        android:title="" />
+</menu>

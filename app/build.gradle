@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -49,6 +50,8 @@ dependencies {
     def retrofit_version = '2.8.1'
     def coroutines_version = '1.6.0'
     def lifecycle_version = '2.4.1'
+    def nav_version = "2.4.2"
+
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -80,4 +83,20 @@ dependencies {
     def paging_version = "3.1.1" //current version at the time
 
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    implementation 'com.airbnb.android:lottie:5.1.1'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation 'dev.chrisbanes.insetter:insetter:0.6.0'
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
+
+
+
+
 }

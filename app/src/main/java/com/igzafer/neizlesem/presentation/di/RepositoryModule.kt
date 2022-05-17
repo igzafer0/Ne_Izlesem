@@ -1,7 +1,13 @@
 package com.igzafer.neizlesem.presentation.di
 
+import com.igzafer.neizlesem.data.repository.ActorsRepositoryImpl
+import com.igzafer.neizlesem.data.repository.CategoriesRepositoryImpl
 import com.igzafer.neizlesem.data.repository.MovieRepositoryImpl
+import com.igzafer.neizlesem.data.repository.data_source.ActorsRemoteDataSource
+import com.igzafer.neizlesem.data.repository.data_source.CategoriesRemoteDataSource
 import com.igzafer.neizlesem.data.repository.data_source.MoviesRemoteDataSource
+import com.igzafer.neizlesem.domain.repository.ActorRepository
+import com.igzafer.neizlesem.domain.repository.CategoryRepository
 import com.igzafer.neizlesem.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
@@ -20,4 +26,20 @@ class RepositoryModule {
     ): MovieRepository {
         return MovieRepositoryImpl(moviesRemoteDataSource)
     }
+    @Singleton
+    @Provides
+    fun provideActorsRepository(
+        actorsRemoteDataSource: ActorsRemoteDataSource
+    ): ActorRepository {
+        return ActorsRepositoryImpl(actorsRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCategoriesRepository(
+        categoriesRemoteDataSource: CategoriesRemoteDataSource
+    ): CategoryRepository {
+        return CategoriesRepositoryImpl(categoriesRemoteDataSource)
+    }
+
 }

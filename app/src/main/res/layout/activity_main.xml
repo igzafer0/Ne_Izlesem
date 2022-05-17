@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/dark"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-    <LinearLayout
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/viewPager"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/firsFragment"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/secondFragment"
-        android:layout_marginTop="10dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/thirdFragment"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:contentDescription="saf"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_navigation"
 
         />
 
+    <me.ibrahimsn.lib.SmoothBottomBar
+        android:id="@+id/tabLayout"
+        android:layout_width="162dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="safff"
+        app:corners="all"
+        app:backgroundColor="@color/dark"
+        app:cornerRadius="20dp"
+        app:iconSize="16dp"
 
-</LinearLayout>
+        android:theme="@style/Theme.Material3.Light"
+
+        app:indicatorColor="@color/lightBlack"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:menu="@menu/main_nav" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

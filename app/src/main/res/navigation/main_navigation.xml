@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homePageFragment"
+    android:id="@+id/main_navigation">
+    <fragment
+        android:id="@+id/homePageFragment"
+        tools:layout="@layout/fragment_home_page"
+        android:name="com.igzafer.neizlesem.presentation.view.HomePageFragment"
+        android:label="HomePageFragment" />
+    <fragment
+        android:id="@+id/searchPageFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.SearchPageFragment"
+        android:label="fragment_search_page"
+        tools:layout="@layout/fragment_search_page" >
+        <action
+            android:id="@+id/action_searchPageFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_searchPageFragment_to_movieCategoryFragment"
+            app:destination="@id/movieCategoryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountPageFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.AccountPageFragment"
+        android:label="fragment_account_page"
+        tools:layout="@layout/fragment_account_page" />
+    <fragment
+        android:id="@+id/noInternetConnectionFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.NoInternetConnectionFragment"
+        android:label="fragment_no_internet_connection"
+        tools:layout="@layout/fragment_no_internet_connection" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/movieCategoryFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.MovieCategoryFragment"
+        android:label="fragment_movie_category"
+        tools:layout="@layout/fragment_movie_category" >
+        <argument
+            android:name="CategoryModel"
+            app:argType="com.igzafer.neizlesem.data.model.category.CategoryModel" />
+    </fragment>
+
+</navigation>

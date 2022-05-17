@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    android:orientation="vertical"
+    tools:context=".presentation.view.SearchPageFragment">
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:gravity="center_vertical"
+     android:layout_height="50dp"
+     android:orientation="horizontal"
+     android:layout_marginTop="30dp"
+     android:id="@+id/searchPageButton"
+     android:background="@drawable/round"
+     android:layout_marginHorizontal="10dp"
+     android:backgroundTint="@color/lightBlack"
+  >
+  <ImageView
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      android:layout_marginLeft="10dp"
+      android:src="@drawable/ic_search"
+      />
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_marginStart="20dp"
+      android:text="Bir seyler ara.."
+      android:fontFamily="@font/gilroybold"
+      android:textColor="@color/white"
+      android:textSize="14sp"
+      android:layout_height="wrap_content"/>
+ </LinearLayout>
+ <TextView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Popüler Aktörler"
+    android:layout_marginStart="10dp"
+     android:fontFamily="@font/gilroybold"
+     android:textColor="@color/white"
+     android:textSize="16sp"
+
+     android:layout_marginTop="20dp"
+     />
+ <androidx.recyclerview.widget.RecyclerView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:id="@+id/popularActorRw"
+     />
+ <TextView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Film türleri"
+     android:layout_marginStart="10dp"
+     android:fontFamily="@font/gilroybold"
+     android:textColor="@color/white"
+     android:textSize="16sp"
+
+     android:layout_marginTop="20dp"
+     />
+ <androidx.recyclerview.widget.RecyclerView
+
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:id="@+id/movieCategoryRw"
+     />
+</LinearLayout>

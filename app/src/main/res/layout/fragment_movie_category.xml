@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    android:orientation="vertical"
+    tools:context=".presentation.view.MovieCategoryFragment">
+
+    <ImageView
+        android:layout_width="36dp"
+
+        android:src="@drawable/ic_back"
+        android:scaleType="centerInside"
+        android:id="@+id/backButton"
+        android:layout_marginTop="30dp"
+        android:layout_height="36dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Korku\nKategorisindeki\nFilmler"
+        android:textColor="@color/white"
+        android:id="@+id/titleTw"
+        android:fontFamily="@font/gilroybold"
+        android:textSize="26sp"
+        android:lineHeight="36dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:id="@+id/discoverMoviesRw"
+        />
+
+</LinearLayout>

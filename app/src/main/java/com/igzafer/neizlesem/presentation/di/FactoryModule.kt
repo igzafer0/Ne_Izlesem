@@ -1,10 +1,10 @@
 package com.igzafer.neizlesem.presentation.di
 
 import android.app.Application
-import com.igzafer.neizlesem.domain.usecase.GetNowPlayingMovieUseCase
-import com.igzafer.neizlesem.domain.usecase.GetPopularMoviesUseCase
-import com.igzafer.neizlesem.presentation.view_model.NowPlayingMoviesViewModelFactory
-import com.igzafer.neizlesem.presentation.view_model.PopularMoviesViewModelFactory
+import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
+import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
+import com.igzafer.neizlesem.domain.usecase.movies.*
+import com.igzafer.neizlesem.presentation.view_model.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,19 +18,41 @@ class FactoryModule {
 
     @Singleton
     @Provides
-    fun providePopularMoviesViewModelFactory(
+    fun provideHomeViewModelFactory(
         application: Application,
-        getPopularMoviesUseCase: GetPopularMoviesUseCase
-    ): PopularMoviesViewModelFactory {
-        return PopularMoviesViewModelFactory(application, getPopularMoviesUseCase)
+        getNowPlayingMovieUseCase: GetNowPlayingMovieUseCase,
+        getPopularMoviesUseCase: GetPopularMoviesUseCase,
+        getTrendingWeeklyMoviesUseCase: GetTrendingWeeklyMoviesUseCase,
+        getUpcomingMovieUseCase: GetUpcomingMovieUseCase,
+    ): HomeFragmentViewModelFactory {
+        return HomeFragmentViewModelFactory(
+            application, getNowPlayingMovieUseCase,
+            getPopularMoviesUseCase,
+            getTrendingWeeklyMoviesUseCase,
+            getUpcomingMovieUseCase
+        )
     }
 
     @Singleton
     @Provides
-    fun provideNowPlayingMoviesViewModelFactory(
+    fun provideSearchViewModelFactory(
         application: Application,
-        getNowPlayingMovieUseCase: GetNowPlayingMovieUseCase
-    ): NowPlayingMoviesViewModelFactory {
-        return NowPlayingMoviesViewModelFactory(application, getNowPlayingMovieUseCase)
+        getPopularActorsUseCase: GetPopularActorsUseCase,
+        getMovieCategoriesUseCase: GetMovieCategoriesUseCase
+    ): SearchFragmentViewModelFactory {
+        return SearchFragmentViewModelFactory(
+            application, getPopularActorsUseCase, getMovieCategoriesUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieCategoryFragmentViewModelFactory(
+        application: Application,
+        discoverMoviesUseCase: DiscoverMoviesUseCase
+    ): MovieCategoryFragmentViewModelFactory {
+        return MovieCategoryFragmentViewModelFactory(
+            application, discoverMoviesUseCase
+        )
     }
 }
