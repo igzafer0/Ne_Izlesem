@@ -8,7 +8,11 @@
         android:id="@+id/homePageFragment"
         tools:layout="@layout/fragment_home_page"
         android:name="com.igzafer.neizlesem.presentation.view.HomePageFragment"
-        android:label="HomePageFragment" />
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchPageFragment"
         android:name="com.igzafer.neizlesem.presentation.view.SearchPageFragment"
@@ -39,7 +43,11 @@
         android:id="@+id/searchFragment"
         android:name="com.igzafer.neizlesem.presentation.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/movieCategoryFragment"
         android:name="com.igzafer.neizlesem.presentation.view.MovieCategoryFragment"
@@ -48,6 +56,22 @@
         <argument
             android:name="CategoryModel"
             app:argType="com.igzafer.neizlesem.data.model.category.CategoryModel" />
+        <action
+            android:id="@+id/action_movieCategoryFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="MovieId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_movieCategoryFragment"
+            app:destination="@id/movieCategoryFragment" />
     </fragment>
 
 </navigation>

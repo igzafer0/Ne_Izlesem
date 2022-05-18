@@ -39,8 +39,8 @@ class FactoryModule {
         application: Application,
         getPopularActorsUseCase: GetPopularActorsUseCase,
         getMovieCategoriesUseCase: GetMovieCategoriesUseCase
-    ): SearchFragmentViewModelFactory {
-        return SearchFragmentViewModelFactory(
+    ): SearchPageFragmentViewModelFactory {
+        return SearchPageFragmentViewModelFactory(
             application, getPopularActorsUseCase, getMovieCategoriesUseCase
         )
     }
@@ -53,6 +53,27 @@ class FactoryModule {
     ): MovieCategoryFragmentViewModelFactory {
         return MovieCategoryFragmentViewModelFactory(
             application, discoverMoviesUseCase
+        )
+    }
+    @Singleton
+    @Provides
+    fun provideMovieDetailsFragmentViewModelFactory(
+        application: Application,
+        getMovieDetailsUseCase: GetMovieDetailsUseCase
+    ): MovieDetailsFragmentViewModelFactory {
+        return MovieDetailsFragmentViewModelFactory(
+            application, getMovieDetailsUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchFragmentViewModelFactory(
+        application: Application,
+        searchMovieUseCase: SearchMovieUseCase
+    ): SearchFragmentViewModelFactory {
+        return SearchFragmentViewModelFactory(
+            application, searchMovieUseCase
         )
     }
 }

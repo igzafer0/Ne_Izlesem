@@ -117,18 +117,11 @@ class HomeFragmentViewModel(
                     return LoadResult.Error(Throwable("liste boş"))
                 } else {
                     return try {
-                        val nextKey =
-                            if (movies.isEmpty()) {
-                                null
-                            } else {
-                                // By default, initial load size = 3 * NETWORK PAGE SIZE
-                                // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
-                            }
+
                         LoadResult.Page(
                             data = movies,
                             prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                            nextKey = nextKey
+                            nextKey = null
                         )
                     } catch (exception: IOException) {
                         return LoadResult.Error(exception)

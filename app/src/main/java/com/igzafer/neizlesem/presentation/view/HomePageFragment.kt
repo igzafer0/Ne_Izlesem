@@ -1,17 +1,16 @@
 package com.igzafer.neizlesem.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igzafer.neizlesem.MainActivity
 import com.igzafer.neizlesem.R
-import com.igzafer.neizlesem.data.util.setOnClickItemListenerMovie
 import com.igzafer.neizlesem.databinding.FragmentHomePageBinding
 import com.igzafer.neizlesem.presentation.adapter.Movie.NowPlayingMoviesRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.PopularMoviesRowAdapter
@@ -49,8 +48,41 @@ class HomePageFragment : Fragment() {
 
         initRecys()
         getDatas()
-        setOnClickItemListenerMovie {
-            Log.d("winter", "sdaf")
+        nowPlayingAdapter.setOnClickItemListener {
+            val bundle = Bundle().apply {
+                putInt("MovieId", it.id)
+            }
+            findNavController().navigate(
+                R.id.action_homePageFragment_to_movieDetailsFragment,
+                bundle
+            )
+        }
+        popularAdapter.setOnClickItemListener {
+            val bundle = Bundle().apply {
+                putInt("MovieId", it.id)
+            }
+            findNavController().navigate(
+                R.id.action_homePageFragment_to_movieDetailsFragment,
+                bundle
+            )
+        }
+        soonAdapter.setOnClickItemListener {
+            val bundle = Bundle().apply {
+                putInt("MovieId", it.id)
+            }
+            findNavController().navigate(
+                R.id.action_homePageFragment_to_movieDetailsFragment,
+                bundle
+            )
+        }
+        trendingWeeklyAdapter.setOnClickItemListener {
+            val bundle = Bundle().apply {
+                putInt("MovieId", it.id)
+            }
+            findNavController().navigate(
+                R.id.action_homePageFragment_to_movieDetailsFragment,
+                bundle
+            )
         }
 
 

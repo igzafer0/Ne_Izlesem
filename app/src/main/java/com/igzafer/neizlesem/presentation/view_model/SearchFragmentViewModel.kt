@@ -1,7 +1,6 @@
 package com.igzafer.neizlesem.presentation.view_model
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.paging.*
 import com.igzafer.neizlesem.data.model.actor.ActorsModel
@@ -9,10 +8,7 @@ import com.igzafer.neizlesem.data.model.category.CategoryModel
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
 import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
 import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetNowPlayingMovieUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetPopularMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetTrendingWeeklyMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetUpcomingMovieUseCase
+import com.igzafer.neizlesem.domain.usecase.movies.SearchMovieUseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 import java.io.IOException
@@ -20,40 +16,32 @@ import java.lang.Exception
 
 class SearchFragmentViewModel(
     private val app: Application,
-    private val getPopularActorsUseCase: GetPopularActorsUseCase,
-    private val getMovieCategoriesUseCase: GetMovieCategoriesUseCase
-) : AndroidViewModel(app) {
+    private val searchMovieUseCase: SearchMovieUseCase,
 
-    fun getPopularActors(): Flow<PagingData<ActorsModel>> {
+    ) : AndroidViewModel(app) {
 
-        return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = {
-                PopularActorsPagingSource()
-            }).flow
-    }
-
-    fun getMovieCategories(): Flow<PagingData<CategoryModel>> {
+    fun searchMovie(query: String): Flow<PagingData<MoviesModel>> {
 
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
-                MovieCategoriesPagingSource()
+                SearchMoviePagingSource(query)
             }).flow
     }
+
 
     private val TMDB_STARTING_PAGE_INDEX = 1
 
-    inner class PopularActorsPagingSource() : PagingSource<Int, ActorsModel>() {
-        override fun getRefreshKey(state: PagingState<Int, ActorsModel>): Int? {
+    inner class SearchMoviePagingSource(val query: String) : PagingSource<Int, MoviesModel>() {
+        override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
             return state.anchorPosition
         }
 
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ActorsModel> {
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
             val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
             try {
-                val response = getPopularActorsUseCase.execute(page = pageIndex)
-                val actors = response.data?.actorsModels
+                val response = searchMovieUseCase.execute(query = query,page = pageIndex)
+                val actors = response.data?.moviesModels
                 if (actors == null) {
                     return LoadResult.Error(Throwable("liste boş"))
                 } else {
@@ -90,41 +78,4 @@ class SearchFragmentViewModel(
 
     }
 
-    inner class MovieCategoriesPagingSource() : PagingSource<Int, CategoryModel>() {
-        override fun getRefreshKey(state: PagingState<Int, CategoryModel>): Int? {
-            return state.anchorPosition
-        }
-
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CategoryModel> {
-            val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
-            try {
-                val response = getMovieCategoriesUseCase.execute()
-                val movies = response.data?.categoryModels
-                if (movies == null) {
-                    return LoadResult.Error(Throwable("liste boş"))
-                } else {
-                    return try {
-                        LoadResult.Page(
-                            data = movies,
-                            prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                            nextKey = null
-                        )
-                    } catch (exception: IOException) {
-                        return LoadResult.Error(exception)
-                    } catch (exception: HttpException) {
-                        return LoadResult.Error(exception)
-                    }
-                }
-
-
-            } catch (e: Exception) {
-
-                return LoadResult.Error(IOException("no internet"))
-
-            }
-
-
-        }
-
-    }
 }

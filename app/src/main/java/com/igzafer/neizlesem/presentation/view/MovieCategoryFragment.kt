@@ -50,6 +50,12 @@ class MovieCategoryFragment : Fragment() {
         discoverMoviesAdapter = (activity as MainActivity).recyAdapterDiscoverMoviesAdapter
         getDatas()
         initRecys()
+        discoverMoviesAdapter.setOnClickItemListener {
+            val bundle = Bundle().apply {
+                putInt("MovieId", it.id)
+            }
+           findNavController().navigate(R.id.action_movieCategoryFragment_to_movieDetailsFragment,bundle)
+        }
     }
 
     private fun getDatas() {

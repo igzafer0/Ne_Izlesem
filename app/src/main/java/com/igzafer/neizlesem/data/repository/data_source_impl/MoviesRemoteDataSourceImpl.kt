@@ -2,6 +2,7 @@ package com.igzafer.neizlesem.data.repository.data_source_impl
 
 import com.igzafer.neizlesem.data.api.ApiService
 import com.igzafer.neizlesem.data.model.movie.BaseMovieModel
+import com.igzafer.neizlesem.data.model.movie.movie_details.BaseMovieDetailsModel
 import com.igzafer.neizlesem.data.repository.data_source.MoviesRemoteDataSource
 import retrofit2.Response
 
@@ -25,5 +26,14 @@ class MoviesRemoteDataSourceImpl(private val apiService: ApiService) : MoviesRem
     override suspend fun discoverMovies(page: Int, genres: Int): Response<BaseMovieModel> {
         return apiService.discoverMovie(page = page, genres = genres)
     }
+
+    override suspend fun getMovieDetails(movieId: Int): Response<BaseMovieDetailsModel> {
+        return apiService.getMovieDetails(movieId = movieId)
+    }
+
+    override suspend fun searchMovie(query: String, page: Int): Response<BaseMovieModel> {
+        return apiService.searchMovie(query = query, page = page)
+    }
+
 
 }

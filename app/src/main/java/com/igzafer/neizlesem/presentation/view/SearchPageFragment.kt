@@ -7,24 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.igzafer.neizlesem.MainActivity
 import com.igzafer.neizlesem.R
-import com.igzafer.neizlesem.data.model.category.CategoryModel
-import com.igzafer.neizlesem.data.util.onItemClickListenerCategory
-import com.igzafer.neizlesem.data.util.setOnClickItemListenerCategory
-import com.igzafer.neizlesem.databinding.FragmentHomePageBinding
+
 import com.igzafer.neizlesem.databinding.FragmentSearchPageBinding
 import com.igzafer.neizlesem.presentation.adapter.Actors.PopularActorsRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Category.MovieCategoryAdapter
-import com.igzafer.neizlesem.presentation.adapter.Movie.NowPlayingMoviesRowAdapter
-import com.igzafer.neizlesem.presentation.adapter.Movie.PopularMoviesRowAdapter
-import com.igzafer.neizlesem.presentation.view_model.HomeFragmentViewModel
-import com.igzafer.neizlesem.presentation.view_model.SearchFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.SearchPageFragmentViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -40,13 +32,13 @@ class SearchPageFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentSearchPageBinding
-    lateinit var viewModel: SearchFragmentViewModel
+    lateinit var viewModelPage: SearchPageFragmentViewModel
     private lateinit var popularActorsAdapter: PopularActorsRowAdapter
     private lateinit var movieCategoryAdapter: MovieCategoryAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSearchPageBinding.bind(view)
-        viewModel = (activity as MainActivity).searchFragmentViewModel
+        viewModelPage = (activity as MainActivity).searchPageFragmentViewModel
         popularActorsAdapter = (activity as MainActivity).recyAdapterPopularActors
         movieCategoryAdapter = (activity as MainActivity).recyAdapterMovieCategoryAdapter
         getDatas()
@@ -54,24 +46,27 @@ class SearchPageFragment : Fragment() {
         binding.searchPageButton.setOnClickListener {
             findNavController().navigate(R.id.action_searchPageFragment_to_searchFragment)
         }
-        setOnClickItemListenerCategory {
-            Log.d("winter",it.name)
+        movieCategoryAdapter.setOnClickItemListener {
+            Log.d("winter", it.name)
             val bundle = Bundle().apply {
                 putSerializable("CategoryModel", it)
             }
-            findNavController().navigate(R.id.action_searchPageFragment_to_movieCategoryFragment,bundle)
+            findNavController().navigate(
+                R.id.action_searchPageFragment_to_movieCategoryFragment,
+                bundle
+            )
         }
 
     }
 
     private fun getDatas() {
         lifecycleScope.launchWhenCreated {
-            viewModel.getPopularActors().collectLatest {
+            viewModelPage.getPopularActors().collectLatest {
                 popularActorsAdapter.submitData(it)
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.getMovieCategories().collectLatest {
+            viewModelPage.getMovieCategories().collectLatest {
                 movieCategoryAdapter.submitData(it)
             }
         }

@@ -62,4 +62,17 @@ class UseCaseModule {
     ): DiscoverMoviesUseCase {
         return DiscoverMoviesUseCase(movieRepository)
     }
+
+    @Provides
+    fun provideMovieDetailsUseCase(
+        movieRepository: MovieRepository
+    ): GetMovieDetailsUseCase {
+        return GetMovieDetailsUseCase(movieRepository)
+    }
+    @Provides
+    fun provideSearchMovieUseCase(
+        movieRepository: MovieRepository
+    ): SearchMovieUseCase {
+        return SearchMovieUseCase(movieRepository)
+    }
 }

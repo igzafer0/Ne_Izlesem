@@ -1,6 +1,7 @@
 package com.igzafer.neizlesem.data.repository
 
 import com.igzafer.neizlesem.data.model.movie.BaseMovieModel
+import com.igzafer.neizlesem.data.model.movie.movie_details.BaseMovieDetailsModel
 import com.igzafer.neizlesem.data.repository.data_source.MoviesRemoteDataSource
 import com.igzafer.neizlesem.data.util.Resource
 import com.igzafer.neizlesem.domain.repository.MovieRepository
@@ -27,7 +28,24 @@ class MovieRepositoryImpl(private val remoteDataSource: MoviesRemoteDataSource) 
         return responseToResource(remoteDataSource.discoverMovies(page, genres))
     }
 
+    override suspend fun getMovieDetails(movieId: Int): Resource<BaseMovieDetailsModel> {
+        return responseToResourceDetails(remoteDataSource.getMovieDetails(movieId = movieId))
+    }
+
+    override suspend fun searchMovie(query: String, page: Int): Resource<BaseMovieModel> {
+        return responseToResource(remoteDataSource.searchMovie(query, page))
+    }
+
     private fun responseToResource(response: Response<BaseMovieModel>): Resource<BaseMovieModel> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun responseToResourceDetails(response: Response<BaseMovieDetailsModel>): Resource<BaseMovieDetailsModel> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)

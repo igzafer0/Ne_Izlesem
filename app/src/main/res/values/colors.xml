@@ -11,7 +11,7 @@
 
     <color name="lightBlack">#2C2C2C</color>
     <color name="dark">#1B1B1B</color>
-    <color name="darkTrans">#8F1B1B1B</color>
+    <color name="darkTrans">#861B1B1B</color>
     <color name="success">#81C14B</color>
     <color name="inactive">#bdbdbd</color>
     <color name="error">#FF1717</color>

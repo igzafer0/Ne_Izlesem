@@ -6,9 +6,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.igzafer.neizlesem.R
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
-import com.igzafer.neizlesem.data.util.onItemClickListenerMovie
-import com.igzafer.neizlesem.databinding.MoviesRowStyleBinding
 import com.igzafer.neizlesem.databinding.MoviesVerticalRowStyleBinding
 
 class DiscoverMoviesAdapter :
@@ -17,18 +16,27 @@ class DiscoverMoviesAdapter :
     inner class ViewHolder(val binding: MoviesVerticalRowStyleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MoviesModel) {
-            val posterPath = "https://image.tmdb.org/t/p/w500" + data.posterPath
-            Glide.with(binding.imPoster.context).load(posterPath)
-                .into(binding.imPoster)
+            if(data.posterPath!=null){
+                val posterPath = "https://image.tmdb.org/t/p/w500" + data.posterPath
+                Glide.with(binding.imPoster.context).load(posterPath)
+                    .into(binding.imPoster)
+            }else{
+                binding.imPoster.setImageResource(R.mipmap.ic_launcher_round)
+            }
+
             binding.titleTw.text=data.title
             binding.releaseTw.text=data.releaseDate
             binding.rateTw.text=data.voteAverage.toString()
             binding.cardView.setOnClickListener {
-                onItemClickListenerMovie?.let {
+                onItemClickListener?.let {
                     it(data)
                 }
             }
         }
+    }
+    var onItemClickListener: ((MoviesModel) -> Unit)? = null
+    fun setOnClickItemListener(listener: (MoviesModel) -> Unit) {
+        onItemClickListener = listener
     }
 
 

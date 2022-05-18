@@ -5,23 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
 import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetNowPlayingMovieUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetPopularMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetTrendingWeeklyMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetUpcomingMovieUseCase
+import com.igzafer.neizlesem.domain.usecase.movies.SearchMovieUseCase
 
 @Suppress("UNCHECKED_CAST")
 class SearchFragmentViewModelFactory(
     private val app: Application,
-    private val getPopularActorsUseCase: GetPopularActorsUseCase,
-    private val getMovieCategoriesUseCase: GetMovieCategoriesUseCase,
+    private val searchMovieUseCase: SearchMovieUseCase,
 
     ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SearchFragmentViewModel(
             app,
-            getPopularActorsUseCase,
-            getMovieCategoriesUseCase
+            searchMovieUseCase
         ) as T
     }
 

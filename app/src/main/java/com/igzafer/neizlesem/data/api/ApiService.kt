@@ -4,8 +4,10 @@ import com.igzafer.neizlesem.BuildConfig
 import com.igzafer.neizlesem.data.model.actor.BaseActorModel
 import com.igzafer.neizlesem.data.model.category.BaseCategoryModel
 import com.igzafer.neizlesem.data.model.movie.BaseMovieModel
+import com.igzafer.neizlesem.data.model.movie.movie_details.BaseMovieDetailsModel
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -65,6 +67,21 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("with_genres") genres: Int
 
+    ): Response<BaseMovieModel>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovieDetails(
+        @Path(value = "movieId", encoded = true) movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = BuildConfig.LANGUAGE,
+    ): Response<BaseMovieDetailsModel>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = BuildConfig.LANGUAGE,
+        @Query("query") query: String,
+        @Query("page") page: Int
     ): Response<BaseMovieModel>
 
 

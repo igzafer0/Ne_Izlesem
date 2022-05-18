@@ -54,4 +54,10 @@ class AdapterModule {
     fun provideDiscoverMoviesAdapter(): DiscoverMoviesAdapter {
         return DiscoverMoviesAdapter()
     }
+
+    @Singleton
+    @Provides
+    fun provideSearchMoviesAdapter(): SearchMovieAdapter {
+        return SearchMovieAdapter()
+    }
 }

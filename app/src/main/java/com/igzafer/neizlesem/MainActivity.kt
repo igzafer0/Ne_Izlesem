@@ -3,19 +3,16 @@ package com.igzafer.neizlesem
 import android.os.Bundle
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.igzafer.neizlesem.data.util.lightStatusBar
 import com.igzafer.neizlesem.data.util.setFullScreen
 import com.igzafer.neizlesem.databinding.ActivityMainBinding
 import com.igzafer.neizlesem.presentation.adapter.Actors.PopularActorsRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Category.MovieCategoryAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.*
-import com.igzafer.neizlesem.presentation.view.MovieCategoryFragment
 import com.igzafer.neizlesem.presentation.view_model.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,10 +27,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragmentViewModelFactory: HomeFragmentViewModelFactory
 
     @Inject
+    lateinit var searchFragmentViewModelFactory: SearchFragmentViewModelFactory
+
+    @Inject
+    lateinit var movieDetailsFragmentViewModelFactory: MovieDetailsFragmentViewModelFactory
+
+    @Inject
     lateinit var movieCategoryFragmentViewModelFactory: MovieCategoryFragmentViewModelFactory
 
     @Inject
-    lateinit var searchFragmentViewModelFactory: SearchFragmentViewModelFactory
+    lateinit var searchPageFragmentViewModelFactory: SearchPageFragmentViewModelFactory
 
     @Inject
     lateinit var recyAdapterNowPlaying: NowPlayingMoviesRowAdapter
@@ -56,17 +59,22 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var recyAdapterDiscoverMoviesAdapter: DiscoverMoviesAdapter
 
+    @Inject
+    lateinit var recyAdapterSearchMovieAdapter: SearchMovieAdapter
+
     private lateinit var binding: ActivityMainBinding
     lateinit var homeFragmentViewModel: HomeFragmentViewModel
-    lateinit var searchFragmentViewModel: SearchFragmentViewModel
+    lateinit var searchPageFragmentViewModel: SearchPageFragmentViewModel
     lateinit var movieCategoryFragmentViewModel: MovieCategoryFragmentViewModel
+    lateinit var movieDetailsFragmentViewModel: MovieDetailsFragmentViewModel
+    lateinit var searchFragmentViewModel: SearchFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModels()
 
         setFullScreen(window)
@@ -87,16 +95,25 @@ class MainActivity : AppCompatActivity() {
             homeFragmentViewModelFactory
         )[HomeFragmentViewModel::class.java]
 
-        searchFragmentViewModel = ViewModelProvider(
+        searchPageFragmentViewModel = ViewModelProvider(
             this,
-            searchFragmentViewModelFactory
-        )[SearchFragmentViewModel::class.java]
+            searchPageFragmentViewModelFactory
+        )[SearchPageFragmentViewModel::class.java]
 
         movieCategoryFragmentViewModel = ViewModelProvider(
             this,
             movieCategoryFragmentViewModelFactory
         )[MovieCategoryFragmentViewModel::class.java]
 
+        movieDetailsFragmentViewModel = ViewModelProvider(
+            this,
+            movieDetailsFragmentViewModelFactory
+        )[MovieDetailsFragmentViewModel::class.java]
+
+        searchFragmentViewModel = ViewModelProvider(
+            this,
+            searchFragmentViewModelFactory
+        )[SearchFragmentViewModel::class.java]
 
     }
 
