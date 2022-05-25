@@ -1,9 +1,8 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.category_fragment
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.paging.*
-import com.igzafer.neizlesem.data.model.actor.ActorsModel
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
 import com.igzafer.neizlesem.domain.usecase.movies.DiscoverMoviesUseCase
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +35,7 @@ class MovieCategoryFragmentViewModel(
 
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
             val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
+
             try {
                 val response = discoverMoviesUseCase.execute(page = pageIndex, genres)
                 val actors = response.data?.moviesModels
@@ -49,7 +49,7 @@ class MovieCategoryFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = actors,

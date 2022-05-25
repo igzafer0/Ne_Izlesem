@@ -8,11 +8,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.igzafer.neizlesem.data.model.actor.ActorsModel
-import com.igzafer.neizlesem.data.model.movie.MoviesModel
+import com.igzafer.neizlesem.BuildConfig
+import com.igzafer.neizlesem.R
+import com.igzafer.neizlesem.data.model.actor.actor_details.ActorsModel
 import com.igzafer.neizlesem.databinding.ActorsRowStyleBinding
-import com.igzafer.neizlesem.databinding.MoviesRowStyleBinding
-import com.igzafer.neizlesem.presentation.adapter.Movie.NowPlayingMoviesRowAdapter
 
 class PopularActorsRowAdapter :
     PagingDataAdapter<ActorsModel, PopularActorsRowAdapter.ViewHolder>(DiffUtilCallBack()) {
@@ -23,10 +22,15 @@ class PopularActorsRowAdapter :
         fun bind(data: ActorsModel) {
             Log.d("winter", data.id.toString())
             if (data.profilePath == null) {
-                binding.circleActorAvatar.visibility = View.GONE
+                binding.circleActorAvatar.setImageResource(R.mipmap.ic_launcher_round)
+
             } else {
-                val posterPath = "https://image.tmdb.org/t/p/w500" + data.profilePath
-                Glide.with(binding.circleActorAvatar.context).load(posterPath)
+                val posterPath = BuildConfig.PHOTO_URL + data.profilePath
+                Glide.with(binding.circleActorAvatar.context).load(posterPath).thumbnail(
+                    Glide.with(binding.circleActorAvatar.context).load(
+                        R.drawable.loading
+                    )
+                )
                     .into(binding.circleActorAvatar)
             }
 
@@ -34,7 +38,7 @@ class PopularActorsRowAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-             holder.bind(getItem(position + 2)!!)
+        holder.bind(getItem(position)!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

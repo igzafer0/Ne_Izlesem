@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:background="@color/dark"
 
@@ -14,44 +14,71 @@
 
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/framePoster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/im_poster_big"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager_slider"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="400dp" />
 
-                android:scaleType="centerCrop" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="200dp"
+                android:layout_alignBottom="@id/view_pager_slider"
                 android:background="@drawable/gradient" />
 
             <ImageView
                 android:id="@+id/backButton"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/round_button"
+                android:backgroundTint="@color/darkTransMax"
+                android:paddingEnd="5dp"
                 android:scaleType="center"
-                android:src="@drawable/ic_back" />
+                android:src="@drawable/ic_back"
+                tools:ignore="RtlSymmetry" />
 
 
-        </FrameLayout>
+        </RelativeLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/saveButton"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_button"
+            android:backgroundTint="@color/darkTransMax"
             android:tint="@color/white"
             app:lottie_colorFilter="@color/white"
             app:lottie_rawRes="@raw/save_animation" />
+
+        <TextView
+            android:id="@+id/pageTw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saveButton"
+            android:singleLine="true"
+            android:layout_alignEnd="@id/saveButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round"
+            android:backgroundTint="@color/darkTransMax"
+            android:fontFamily="@font/gilroybold"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="7dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/titleTw"
@@ -64,16 +91,18 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="32sp" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_below="@id/titleTw"
             android:id="@id/releaseTw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTw"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/gilroylight"
-            android:textSize="12sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:layout_height="wrap_content"/>
+            android:textSize="12sp" />
+
         <RelativeLayout
             android:id="@+id/starRate"
             android:layout_width="wrap_content"
@@ -150,8 +179,38 @@
                 android:textSize="16sp"
 
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:fontFamily="@font/gilroybold"
+                android:text="Oyuncular"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/castRw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="60dp" />
         </LinearLayout>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loadingLottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark"
+            android:visibility="gone"
+
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_loading"
+
+            />
 
     </RelativeLayout>
 </ScrollView>

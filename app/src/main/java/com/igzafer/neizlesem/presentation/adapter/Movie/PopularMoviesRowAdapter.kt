@@ -6,10 +6,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.igzafer.neizlesem.BuildConfig
 import com.igzafer.neizlesem.R
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
 
 import com.igzafer.neizlesem.databinding.MoviesRowStyleBinding
+import java.security.AccessController.getContext
 
 class PopularMoviesRowAdapter :
     PagingDataAdapter<MoviesModel, PopularMoviesRowAdapter.ViewHolder>(DiffUtilCallBack()) {
@@ -19,8 +21,9 @@ class PopularMoviesRowAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MoviesModel) {
             if(data.posterPath!=null){
-                val posterPath = "https://image.tmdb.org/t/p/w500" + data.posterPath
+                val posterPath = BuildConfig.PHOTO_URL+ data.posterPath
                 Glide.with(binding.imPoster.context).load(posterPath)
+                    .thumbnail(Glide.with(binding.imPoster.context).load(R.drawable.loading))
                     .into(binding.imPoster)
             }else{
                 binding.imPoster.setImageResource(R.mipmap.ic_launcher_round)

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:orientation="vertical"
     tools:context=".presentation.view.MovieCategoryFragment">
 
@@ -19,7 +21,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Korku\nKategorisindeki\nFilmler"
         android:textColor="@color/white"
         android:id="@+id/titleTw"
         android:fontFamily="@font/gilroybold"
@@ -28,14 +29,33 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         />
-    <androidx.recyclerview.widget.RecyclerView
-
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:id="@+id/discoverMoviesRw"
-        />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:id="@+id/discoverMoviesRw"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/anim_loading"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:id="@+id/loadingLottie"
+            android:visibility="visible"
+            android:background="@color/dark"
+
+            />
+
+    </FrameLayout>
 
 </LinearLayout>

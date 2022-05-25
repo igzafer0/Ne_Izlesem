@@ -16,7 +16,7 @@ import com.igzafer.neizlesem.presentation.adapter.Movie.NowPlayingMoviesRowAdapt
 import com.igzafer.neizlesem.presentation.adapter.Movie.PopularMoviesRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.TrendingWeeklyMoviesAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.UpcomingMoviesAdapter
-import com.igzafer.neizlesem.presentation.view_model.HomeFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.home_fragment.HomeFragmentViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -50,7 +50,7 @@ class HomePageFragment : Fragment() {
         getDatas()
         nowPlayingAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
             findNavController().navigate(
                 R.id.action_homePageFragment_to_movieDetailsFragment,
@@ -59,7 +59,7 @@ class HomePageFragment : Fragment() {
         }
         popularAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
             findNavController().navigate(
                 R.id.action_homePageFragment_to_movieDetailsFragment,
@@ -68,7 +68,7 @@ class HomePageFragment : Fragment() {
         }
         soonAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
             findNavController().navigate(
                 R.id.action_homePageFragment_to_movieDetailsFragment,
@@ -77,14 +77,23 @@ class HomePageFragment : Fragment() {
         }
         trendingWeeklyAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
             findNavController().navigate(
                 R.id.action_homePageFragment_to_movieDetailsFragment,
                 bundle
             )
         }
-
+        nowPlayingAdapter.addOnPagesUpdatedListener {
+            binding.loadingPopular.visibility = View.GONE
+            binding.loadingPopular.cancelAnimation()
+            binding.loadingNowPlaying.visibility = View.GONE
+            binding.loadingNowPlaying.cancelAnimation()
+            binding.loadingTrend.visibility = View.GONE
+            binding.loadingTrend.cancelAnimation()
+            binding.loadingSoon.visibility = View.GONE
+            binding.loadingSoon.cancelAnimation()
+        }
 
     }
 
@@ -92,17 +101,17 @@ class HomePageFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.getNowPlayingMoviesList().collectLatest {
                 nowPlayingAdapter.submitData(it)
+
             }
         }
-        lifecycleScope.launchWhenCreated {
+
+        lifecycleScope.launchWhenResumed {
             viewModel.getPopularMoviesList().collectLatest {
                 popularAdapter.submitData(it)
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.getTrendingWeeklyMoviesList().collectLatest {
-                trendingWeeklyAdapter.submitData(it)
-            }
+                trendingWeeklyAdapter.differ.submitList(viewModel.getTrendingWeeklyMoviesList().moviesModels)
         }
         lifecycleScope.launchWhenCreated {
             viewModel.getUpcomingMoviesList().collectLatest {

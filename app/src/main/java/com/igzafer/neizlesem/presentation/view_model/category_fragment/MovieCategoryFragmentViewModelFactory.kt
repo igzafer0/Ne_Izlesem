@@ -1,4 +1,4 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.category_fragment
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

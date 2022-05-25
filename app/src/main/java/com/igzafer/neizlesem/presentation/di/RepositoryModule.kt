@@ -5,6 +5,7 @@ import com.igzafer.neizlesem.data.repository.CategoriesRepositoryImpl
 import com.igzafer.neizlesem.data.repository.MovieRepositoryImpl
 import com.igzafer.neizlesem.data.repository.data_source.ActorsRemoteDataSource
 import com.igzafer.neizlesem.data.repository.data_source.CategoriesRemoteDataSource
+import com.igzafer.neizlesem.data.repository.data_source.MoviesLocalDataSource
 import com.igzafer.neizlesem.data.repository.data_source.MoviesRemoteDataSource
 import com.igzafer.neizlesem.domain.repository.ActorRepository
 import com.igzafer.neizlesem.domain.repository.CategoryRepository
@@ -22,9 +23,10 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideMovieRepository(
-        moviesRemoteDataSource: MoviesRemoteDataSource
+        moviesRemoteDataSource: MoviesRemoteDataSource,
+        moviesLocalDataSource: MoviesLocalDataSource
     ): MovieRepository {
-        return MovieRepositoryImpl(moviesRemoteDataSource)
+        return MovieRepositoryImpl(moviesRemoteDataSource,moviesLocalDataSource)
     }
     @Singleton
     @Provides

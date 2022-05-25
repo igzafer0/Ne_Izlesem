@@ -1,10 +1,16 @@
 package com.igzafer.neizlesem.presentation.di
 
 import android.app.Application
+import com.igzafer.neizlesem.domain.usecase.actors.GetCastUseCase
 import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
 import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
 import com.igzafer.neizlesem.domain.usecase.movies.*
-import com.igzafer.neizlesem.presentation.view_model.*
+import com.igzafer.neizlesem.presentation.view_model.category_fragment.MovieCategoryFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.details_fragment.MovieDetailsFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.home_fragment.HomeFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.saved_fragment.SavedPageFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchPageFragmentViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,14 +61,27 @@ class FactoryModule {
             application, discoverMoviesUseCase
         )
     }
+
     @Singleton
     @Provides
     fun provideMovieDetailsFragmentViewModelFactory(
         application: Application,
-        getMovieDetailsUseCase: GetMovieDetailsUseCase
+        getMovieDetailsUseCase: GetMovieDetailsUseCase,
+        deleteSavedMoviesUseCase: DeleteSavedMoviesUseCase,
+        saveMoviesUseCase: SaveMoviesUseCase,
+        getCastUseCase: GetCastUseCase,
+        isExistMovieUseCase: IsExistMovieUseCase,
+        getMoviesImagesUseCase: GetMovieImagesUseCase
+
     ): MovieDetailsFragmentViewModelFactory {
         return MovieDetailsFragmentViewModelFactory(
-            application, getMovieDetailsUseCase
+            application,
+            getMovieDetailsUseCase,
+            deleteSavedMoviesUseCase,
+            saveMoviesUseCase,
+            getCastUseCase,
+            isExistMovieUseCase,
+            getMoviesImagesUseCase
         )
     }
 
@@ -74,6 +93,17 @@ class FactoryModule {
     ): SearchFragmentViewModelFactory {
         return SearchFragmentViewModelFactory(
             application, searchMovieUseCase
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSavedPageFragmentViewModelFactory(
+        application: Application,
+        getSavedMoviesUseCase: GetSavedMoviesUseCase,
+    ): SavedPageFragmentViewModelFactory {
+        return SavedPageFragmentViewModelFactory(
+            application, getSavedMoviesUseCase
         )
     }
 }

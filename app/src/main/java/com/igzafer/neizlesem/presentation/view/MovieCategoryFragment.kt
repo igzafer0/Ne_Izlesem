@@ -9,16 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.igzafer.neizlesem.MainActivity
 import com.igzafer.neizlesem.R
-import com.igzafer.neizlesem.data.util.GridSpacing
 import com.igzafer.neizlesem.databinding.FragmentMovieCategoryBinding
 import com.igzafer.neizlesem.presentation.adapter.Movie.DiscoverMoviesAdapter
-import com.igzafer.neizlesem.presentation.view_model.MovieCategoryFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.category_fragment.MovieCategoryFragmentViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -52,9 +48,13 @@ class MovieCategoryFragment : Fragment() {
         initRecys()
         discoverMoviesAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
            findNavController().navigate(R.id.action_movieCategoryFragment_to_movieDetailsFragment,bundle)
+        }
+        discoverMoviesAdapter.addOnPagesUpdatedListener {
+            binding.loadingLottie.cancelAnimation()
+            binding.loadingLottie.visibility=View.GONE
         }
     }
 

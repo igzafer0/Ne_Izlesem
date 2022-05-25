@@ -24,6 +24,8 @@ android {
         buildConfigField("String", "BASE_URL", MY_URL)
         buildConfigField("String", "LANGUAGE", MY_LANG)
         buildConfigField("String", "REGION", MY_REGION)
+        buildConfigField("String", "PHOTO_URL", MY_PHOTO_URL)
+        buildConfigField("String", "HIGH_RES_PHOTO_URL", MY_BACKGROUND_URL)
     }
 
     buildTypes {
@@ -51,7 +53,7 @@ dependencies {
     def coroutines_version = '1.6.0'
     def lifecycle_version = '2.4.1'
     def nav_version = "2.4.2"
-
+    def roomVersion = "2.4.2"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -80,9 +82,7 @@ dependencies {
 
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
 
-    def paging_version = "3.1.1" //current version at the time
-
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-runtime:3.1.1"
 
     implementation 'com.airbnb.android:lottie:5.1.1'
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
@@ -94,7 +94,14 @@ dependencies {
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation "androidx.room:room-paging:2.5.0-alpha01"
+    kapt "androidx.room:room-compiler:2.5.0-alpha01"
 
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.5.0-rc01"
 
 
 

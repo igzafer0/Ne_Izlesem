@@ -25,10 +25,28 @@
             android:layout_marginTop="10dp"
 
             />
-       <androidx.recyclerview.widget.RecyclerView
-           android:layout_width="match_parent"
-           android:id="@+id/soonRw"
-           android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/soonRw"
+                android:layout_height="wrap_content"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/anim_loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:id="@+id/loadingSoon"
+                android:visibility="visible"
+                android:background="@color/dark"
+
+                />
+
+        </FrameLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,10 +58,28 @@
             android:layout_marginTop="10dp"
 
             />
-        <androidx.recyclerview.widget.RecyclerView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:id="@+id/nowPlayingRw"
-            android:layout_height="wrap_content"/>
+            android:layout_height="190dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/nowPlayingRw"
+                android:layout_height="wrap_content"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/anim_loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:id="@+id/loadingNowPlaying"
+                android:visibility="visible"
+                android:background="@color/dark"
+
+                />
+
+        </FrameLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,10 +91,30 @@
             android:layout_marginTop="10dp"
 
             />
-        <androidx.recyclerview.widget.RecyclerView
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:id="@+id/popularRw"
-            android:layout_height="wrap_content"/>
+            android:layout_gravity="center"
+            android:layout_height="380dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/popularRw"
+                android:layout_height="wrap_content"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/anim_loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+
+                android:id="@+id/loadingPopular"
+                android:visibility="visible"
+                android:background="@color/dark"
+
+                />
+
+        </FrameLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,11 +126,29 @@
             android:layout_marginTop="10dp"
 
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/trendRw"
 
-            android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/trendRw"
+
+                android:layout_height="wrap_content"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/anim_loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:id="@+id/loadingTrend"
+                android:visibility="visible"
+                android:background="@color/dark"
+
+                />
+
+        </FrameLayout>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.igzafer.neizlesem.presentation.di
 
+import com.igzafer.neizlesem.presentation.adapter.Actors.CastRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Actors.PopularActorsRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Category.MovieCategoryAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.*
@@ -59,5 +60,17 @@ class AdapterModule {
     @Provides
     fun provideSearchMoviesAdapter(): SearchMovieAdapter {
         return SearchMovieAdapter()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCastAdapter(): CastRowAdapter {
+        return CastRowAdapter()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSavedMoviesAdapter(): SavedMoviesAdapter {
+        return SavedMoviesAdapter()
     }
 }

@@ -10,10 +10,22 @@ import androidx.navigation.fragment.NavHostFragment
 import com.igzafer.neizlesem.data.util.lightStatusBar
 import com.igzafer.neizlesem.data.util.setFullScreen
 import com.igzafer.neizlesem.databinding.ActivityMainBinding
+import com.igzafer.neizlesem.presentation.adapter.Actors.CastRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Actors.PopularActorsRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Category.MovieCategoryAdapter
 import com.igzafer.neizlesem.presentation.adapter.Movie.*
-import com.igzafer.neizlesem.presentation.view_model.*
+import com.igzafer.neizlesem.presentation.view_model.category_fragment.MovieCategoryFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.category_fragment.MovieCategoryFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.details_fragment.MovieDetailsFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.details_fragment.MovieDetailsFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.home_fragment.HomeFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.home_fragment.HomeFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.saved_fragment.SavedPageFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.saved_fragment.SavedPageFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchFragmentViewModelFactory
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchPageFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchPageFragmentViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchPageFragmentViewModelFactory: SearchPageFragmentViewModelFactory
 
     @Inject
+    lateinit var savedPageFragmentViewModelFactory: SavedPageFragmentViewModelFactory
+
+    @Inject
     lateinit var recyAdapterNowPlaying: NowPlayingMoviesRowAdapter
 
     @Inject
@@ -62,12 +77,19 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var recyAdapterSearchMovieAdapter: SearchMovieAdapter
 
+    @Inject
+    lateinit var recyAdapterGetCast: CastRowAdapter
+
+    @Inject
+    lateinit var recyAdapterSavedMoviesAdapter: SavedMoviesAdapter
+
     private lateinit var binding: ActivityMainBinding
     lateinit var homeFragmentViewModel: HomeFragmentViewModel
     lateinit var searchPageFragmentViewModel: SearchPageFragmentViewModel
     lateinit var movieCategoryFragmentViewModel: MovieCategoryFragmentViewModel
     lateinit var movieDetailsFragmentViewModel: MovieDetailsFragmentViewModel
     lateinit var searchFragmentViewModel: SearchFragmentViewModel
+    lateinit var savedPageFragmentViewModel: SavedPageFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +136,11 @@ class MainActivity : AppCompatActivity() {
             this,
             searchFragmentViewModelFactory
         )[SearchFragmentViewModel::class.java]
+
+        savedPageFragmentViewModel = ViewModelProvider(
+            this,
+            savedPageFragmentViewModelFactory
+        )[SavedPageFragmentViewModel::class.java]
 
     }
 

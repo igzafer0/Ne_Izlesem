@@ -1,16 +1,19 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.home_fragment
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.*
+import com.igzafer.neizlesem.data.model.movie.BaseMovieModel
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
 import com.igzafer.neizlesem.domain.usecase.movies.GetNowPlayingMovieUseCase
 import com.igzafer.neizlesem.domain.usecase.movies.GetPopularMoviesUseCase
 import com.igzafer.neizlesem.domain.usecase.movies.GetTrendingWeeklyMoviesUseCase
 import com.igzafer.neizlesem.domain.usecase.movies.GetUpcomingMovieUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import java.lang.Exception
@@ -24,31 +27,29 @@ class HomeFragmentViewModel(
 ) : AndroidViewModel(app) {
     private var index = 0
     fun getNowPlayingMoviesList(): Flow<PagingData<MoviesModel>> {
-        index = 0
+
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
                 NowPlayingMoviesPagingSource()
             }).flow
     }
+
     fun getPopularMoviesList(): Flow<PagingData<MoviesModel>> {
-        index = 1
+
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
                 PopularMoviesPagingSource()
             }).flow
     }
-    fun getTrendingWeeklyMoviesList(): Flow<PagingData<MoviesModel>> {
-        index = 2
-        return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = {
-                TrendMoviesPagingSource()
-            }).flow
-    }
+
+    suspend fun getTrendingWeeklyMoviesList(): BaseMovieModel =
+        getTrendingWeeklyMoviesUseCase.execute().data!!
+
+
     fun getUpcomingMoviesList(): Flow<PagingData<MoviesModel>> {
-        index=3
+
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
@@ -58,7 +59,8 @@ class HomeFragmentViewModel(
 
 
     private val TMDB_STARTING_PAGE_INDEX = 1
-   inner class NowPlayingMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
+
+    inner class NowPlayingMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
         override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
             return state.anchorPosition
         }
@@ -69,7 +71,7 @@ class HomeFragmentViewModel(
                 val response = getNowPlayingMovieUseCase.execute(page = pageIndex)
                 val movies = response.data?.moviesModels
                 if (movies == null) {
-                      return LoadResult.Error(Throwable("liste boş"))
+                    return LoadResult.Error(Throwable("liste boş"))
                 } else {
                     return try {
                         val nextKey =
@@ -78,7 +80,7 @@ class HomeFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = movies,
@@ -103,44 +105,7 @@ class HomeFragmentViewModel(
         }
 
     }
-    inner class TrendMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
-        override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
-            return state.anchorPosition
-        }
 
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
-            val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
-            try {
-                val response = getTrendingWeeklyMoviesUseCase.execute()
-                val movies = response.data?.moviesModels
-                if (movies == null) {
-                    return LoadResult.Error(Throwable("liste boş"))
-                } else {
-                    return try {
-
-                        LoadResult.Page(
-                            data = movies,
-                            prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                            nextKey = null
-                        )
-                    } catch (exception: IOException) {
-                        return LoadResult.Error(exception)
-                    } catch (exception: HttpException) {
-                        return LoadResult.Error(exception)
-                    }
-                }
-
-
-            } catch (e: Exception) {
-
-                return LoadResult.Error(IOException("no internet"))
-
-            }
-
-
-        }
-
-    }
     inner class UpComingMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
         override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
             return state.anchorPosition
@@ -161,7 +126,7 @@ class HomeFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = movies,
@@ -186,15 +151,19 @@ class HomeFragmentViewModel(
         }
 
     }
+
     inner class PopularMoviesPagingSource() : PagingSource<Int, MoviesModel>() {
         override fun getRefreshKey(state: PagingState<Int, MoviesModel>): Int? {
+            Log.d("winter", "tetiklendi")
             return state.anchorPosition
         }
+
 
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
             val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
             try {
                 val response = getPopularMoviesUseCase.execute(page = pageIndex)
+                Log.d("winter", params.key.toString())
                 val movies = response.data?.moviesModels
                 if (movies == null) {
                     return LoadResult.Error(Throwable("liste boş"))
@@ -206,7 +175,7 @@ class HomeFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = movies,

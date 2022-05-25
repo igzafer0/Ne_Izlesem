@@ -3,6 +3,7 @@ package com.igzafer.neizlesem.presentation.adapter.Category
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.igzafer.neizlesem.data.model.category.CategoryModel
@@ -11,7 +12,7 @@ import com.igzafer.neizlesem.data.model.movie.MoviesModel
 import com.igzafer.neizlesem.databinding.CategoryRowStyleBinding
 
 class MovieCategoryAdapter :
-    PagingDataAdapter<CategoryModel, MovieCategoryAdapter.ViewHolder>(DiffUtilCallBack()) {
+    RecyclerView.Adapter<MovieCategoryAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(val binding: CategoryRowStyleBinding) :
@@ -31,8 +32,9 @@ class MovieCategoryAdapter :
         onItemClickListener = listener
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val data = differ.currentList[position]
 
-        holder.bind(getItem(position)!!)
+        holder.bind(data)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,7 +44,7 @@ class MovieCategoryAdapter :
 
     }
 
-    class DiffUtilCallBack : DiffUtil.ItemCallback<CategoryModel>() {
+    private val callback = object : DiffUtil.ItemCallback<CategoryModel>() {
         override fun areItemsTheSame(
             oldItem: CategoryModel,
             newItem: CategoryModel
@@ -58,5 +60,8 @@ class MovieCategoryAdapter :
         }
 
     }
-
+    val differ = AsyncListDiffer(this, callback)
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 }

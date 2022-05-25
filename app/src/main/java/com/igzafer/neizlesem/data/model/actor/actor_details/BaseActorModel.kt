@@ -1,4 +1,4 @@
-package com.igzafer.neizlesem.data.model.actor
+package com.igzafer.neizlesem.data.model.actor.actor_details
 
 
 import com.google.gson.annotations.SerializedName

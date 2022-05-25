@@ -1,13 +1,10 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.search_fragment
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.paging.*
-import com.igzafer.neizlesem.data.model.actor.ActorsModel
-import com.igzafer.neizlesem.data.model.category.CategoryModel
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
-import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
-import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
 import com.igzafer.neizlesem.domain.usecase.movies.SearchMovieUseCase
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
@@ -37,6 +34,7 @@ class SearchFragmentViewModel(
             return state.anchorPosition
         }
 
+
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MoviesModel> {
             val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
             try {
@@ -52,7 +50,7 @@ class SearchFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = actors,

@@ -1,19 +1,15 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.search_fragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.paging.*
-import com.igzafer.neizlesem.data.model.actor.ActorsModel
+import com.igzafer.neizlesem.data.model.actor.actor_details.ActorsModel
+import com.igzafer.neizlesem.data.model.category.BaseCategoryModel
 import com.igzafer.neizlesem.data.model.category.CategoryModel
-import com.igzafer.neizlesem.data.model.movie.MoviesModel
 import com.igzafer.neizlesem.domain.usecase.actors.GetPopularActorsUseCase
 import com.igzafer.neizlesem.domain.usecase.categories.GetMovieCategoriesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetNowPlayingMovieUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetPopularMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetTrendingWeeklyMoviesUseCase
-import com.igzafer.neizlesem.domain.usecase.movies.GetUpcomingMovieUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import java.lang.Exception
@@ -33,14 +29,9 @@ class SearchPageFragmentViewModel(
             }).flow
     }
 
-    fun getMovieCategories(): Flow<PagingData<CategoryModel>> {
+    suspend fun getMovieCategories(): BaseCategoryModel =
+        getMovieCategoriesUseCase.execute().data!!
 
-        return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = {
-                MovieCategoriesPagingSource()
-            }).flow
-    }
 
     private val TMDB_STARTING_PAGE_INDEX = 1
 
@@ -64,7 +55,7 @@ class SearchPageFragmentViewModel(
                             } else {
                                 // By default, initial load size = 3 * NETWORK PAGE SIZE
                                 // ensure we're not requestxing duplicating items at the 2nd request
-                                pageIndex + (params.loadSize / 20)
+                                pageIndex + (2)
                             }
                         LoadResult.Page(
                             data = actors,
@@ -90,41 +81,4 @@ class SearchPageFragmentViewModel(
 
     }
 
-    inner class MovieCategoriesPagingSource() : PagingSource<Int, CategoryModel>() {
-        override fun getRefreshKey(state: PagingState<Int, CategoryModel>): Int? {
-            return state.anchorPosition
-        }
-
-        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CategoryModel> {
-            val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
-            try {
-                val response = getMovieCategoriesUseCase.execute()
-                val movies = response.data?.categoryModels
-                if (movies == null) {
-                    return LoadResult.Error(Throwable("liste boş"))
-                } else {
-                    return try {
-                        LoadResult.Page(
-                            data = movies,
-                            prevKey = if (pageIndex == TMDB_STARTING_PAGE_INDEX) null else pageIndex,
-                            nextKey = null
-                        )
-                    } catch (exception: IOException) {
-                        return LoadResult.Error(exception)
-                    } catch (exception: HttpException) {
-                        return LoadResult.Error(exception)
-                    }
-                }
-
-
-            } catch (e: Exception) {
-
-                return LoadResult.Error(IOException("no internet"))
-
-            }
-
-
-        }
-
-    }
 }

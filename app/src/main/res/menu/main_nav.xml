@@ -16,10 +16,10 @@
 
         android:title=""/>
     <item
-        android:id="@+id/accountPageFragment"
+        android:id="@+id/savedPageFragment"
 
-        android:icon="@drawable/ic_account"
-        android:contentDescription="Account"
+        android:icon="@drawable/ic_bookmark"
+        android:contentDescription="Saved"
         android:iconTint="@color/color_selector"
 
 

@@ -1,19 +1,24 @@
 package com.igzafer.neizlesem.data.model.movie
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-
+import java.io.Serializable
+@Entity(
+    tableName = "movies"
+)
 data class MoviesModel(
+    @PrimaryKey(autoGenerate = true)
+    val databaseMovieId:Int,
     val adult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
-    @SerializedName("genre_ids")
-    val genreIds: List<Int>,
-    val id: Int,
+    val backdropPath: String?,
+    val id: Int?,
     @SerializedName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
     @SerializedName("original_title")
-    val originalTitle: String,
+    val originalTitle: String?,
     val overview: String,
     val popularity: Double,
     @SerializedName("poster_path")
@@ -26,4 +31,4 @@ data class MoviesModel(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+):Serializable

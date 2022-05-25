@@ -3,26 +3,29 @@ package com.igzafer.neizlesem.presentation.adapter.Movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.igzafer.neizlesem.BuildConfig
 import com.igzafer.neizlesem.R
 import com.igzafer.neizlesem.data.model.movie.MoviesModel
 
 import com.igzafer.neizlesem.databinding.MoviesRowStyleBinding
 
 class TrendingWeeklyMoviesAdapter :
-    PagingDataAdapter<MoviesModel, TrendingWeeklyMoviesAdapter.ViewHolder>(DiffUtilCallBack()) {
+    RecyclerView.Adapter<TrendingWeeklyMoviesAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(val binding: MoviesRowStyleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MoviesModel) {
-            if(data.posterPath!=null){
-                val posterPath = "https://image.tmdb.org/t/p/w500" + data.posterPath
+            if (data.posterPath != null) {
+                val posterPath = BuildConfig.PHOTO_URL + data.posterPath
                 Glide.with(binding.imPoster.context).load(posterPath)
+                    .thumbnail(Glide.with(binding.imPoster.context).load(R.drawable.loading))
                     .into(binding.imPoster)
-            }else{
+            } else {
                 binding.imPoster.setImageResource(R.mipmap.ic_launcher_round)
             }
 
@@ -34,13 +37,15 @@ class TrendingWeeklyMoviesAdapter :
 
         }
     }
+
     var onItemClickListener: ((MoviesModel) -> Unit)? = null
     fun setOnClickItemListener(listener: (MoviesModel) -> Unit) {
         onItemClickListener = listener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position)!!)
+        val data = differ.currentList[position]
+        holder.bind(data!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +55,7 @@ class TrendingWeeklyMoviesAdapter :
 
     }
 
-    class DiffUtilCallBack : DiffUtil.ItemCallback<MoviesModel>() {
+    private val callback = object : DiffUtil.ItemCallback<MoviesModel>() {
         override fun areItemsTheSame(
             oldItem: MoviesModel,
             newItem: MoviesModel
@@ -66,8 +71,10 @@ class TrendingWeeklyMoviesAdapter :
         }
 
     }
-
-
+    val differ = AsyncListDiffer(this, callback)
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 
 
 }

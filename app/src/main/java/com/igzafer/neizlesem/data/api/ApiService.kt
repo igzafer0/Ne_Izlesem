@@ -1,10 +1,12 @@
 package com.igzafer.neizlesem.data.api
 
 import com.igzafer.neizlesem.BuildConfig
-import com.igzafer.neizlesem.data.model.actor.BaseActorModel
+import com.igzafer.neizlesem.data.model.actor.BaseCastModel
+import com.igzafer.neizlesem.data.model.actor.actor_details.BaseActorModel
 import com.igzafer.neizlesem.data.model.category.BaseCategoryModel
 import com.igzafer.neizlesem.data.model.movie.BaseMovieModel
 import com.igzafer.neizlesem.data.model.movie.movie_details.BaseMovieDetailsModel
+import com.igzafer.neizlesem.data.model.movie.movie_images.BaseMovieImagesModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -83,6 +85,19 @@ interface ApiService {
         @Query("query") query: String,
         @Query("page") page: Int
     ): Response<BaseMovieModel>
+
+    @GET("movie/{movieId}/credits")
+    suspend fun getCast(
+        @Path(value = "movieId", encoded = true) movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = BuildConfig.LANGUAGE,
+    ): Response<BaseCastModel>
+
+    @GET("movie/{movieId}/images")
+    suspend fun getMovieImages(
+        @Path(value = "movieId", encoded = true) movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        ): Response<BaseMovieImagesModel>
 
 
 }

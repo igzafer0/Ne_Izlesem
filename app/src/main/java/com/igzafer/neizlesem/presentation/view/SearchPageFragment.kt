@@ -16,7 +16,7 @@ import com.igzafer.neizlesem.R
 import com.igzafer.neizlesem.databinding.FragmentSearchPageBinding
 import com.igzafer.neizlesem.presentation.adapter.Actors.PopularActorsRowAdapter
 import com.igzafer.neizlesem.presentation.adapter.Category.MovieCategoryAdapter
-import com.igzafer.neizlesem.presentation.view_model.SearchPageFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchPageFragmentViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -66,9 +66,9 @@ class SearchPageFragment : Fragment() {
             }
         }
         lifecycleScope.launchWhenCreated {
-            viewModelPage.getMovieCategories().collectLatest {
-                movieCategoryAdapter.submitData(it)
-            }
+
+            movieCategoryAdapter.differ.submitList(viewModelPage.getMovieCategories().categoryModels)
+
         }
     }
 

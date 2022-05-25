@@ -2,7 +2,6 @@ package com.igzafer.neizlesem.presentation.di
 
 import com.igzafer.neizlesem.BuildConfig
 import com.igzafer.neizlesem.data.api.ApiService
-import com.igzafer.neizlesem.data.util.ConnectivityInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,10 +22,11 @@ class NetModule {
     val client = OkHttpClient.Builder().apply {
         this.addInterceptor(interceptor)
         this.retryOnConnectionFailure(true)
-        this.callTimeout(5,TimeUnit.SECONDS)
-        this.connectTimeout(5,TimeUnit.SECONDS)
-        this.readTimeout(5,TimeUnit.SECONDS)
-        this.writeTimeout(5,TimeUnit.SECONDS)
+        this.callTimeout(5,TimeUnit.MINUTES)
+        this.connectTimeout(5,TimeUnit.MINUTES)
+        this.readTimeout(5,TimeUnit.MINUTES)
+        this.writeTimeout(5,TimeUnit.MINUTES)
+
 
     }.build()
 

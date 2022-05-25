@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -14,14 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieDrawable
 import com.igzafer.neizlesem.MainActivity
 import com.igzafer.neizlesem.R
 import com.igzafer.neizlesem.databinding.FragmentSearchBinding
 import com.igzafer.neizlesem.presentation.adapter.Movie.SearchMovieAdapter
-import com.igzafer.neizlesem.presentation.view_model.SearchFragmentViewModel
+import com.igzafer.neizlesem.presentation.view_model.search_fragment.SearchFragmentViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
         searchMovieAdapter = (activity as MainActivity).recyAdapterSearchMovieAdapter
         searchMovieAdapter.setOnClickItemListener {
             val bundle = Bundle().apply {
-                putInt("MovieId", it.id)
+                putSerializable("MovieModel", it)
             }
             findNavController().navigate(R.id.action_searchFragment_to_movieDetailsFragment, bundle)
         }
@@ -69,6 +69,9 @@ class SearchFragment : Fragment() {
             private var timer: Timer = Timer()
             private val DELAY: Long = 500 // Milliseconds
             override fun afterTextChanged(p0: Editable?) {
+                lifecycleScope.launch(Dispatchers.Main){
+                    binding.loadingLottie.visibility=View.VISIBLE
+                }
                 timer.cancel()
                 timer = Timer()
                 timer.schedule(
@@ -76,6 +79,10 @@ class SearchFragment : Fragment() {
                         override fun run() {
                             if (binding.searchEt.text.toString() != "") {
                                 getDatas(binding.searchEt.text.toString())
+                            }else{
+                                lifecycleScope.launch(Dispatchers.Main){
+                                    binding.loadingLottie.visibility=View.GONE
+                                }
                             }
 
                         }
@@ -89,9 +96,14 @@ class SearchFragment : Fragment() {
                 binding.notFoundLl.visibility = View.VISIBLE
                 binding.notFound.playAnimation()
                 binding.notFound.repeatMode = LottieDrawable.RESTART
+                binding.loadingLottie.visibility=View.GONE
+
+
             } else {
                 binding.notFoundLl.visibility = View.GONE
                 binding.notFound.cancelAnimation()
+                binding.loadingLottie.visibility=View.GONE
+
 
             }
         }
@@ -104,9 +116,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun getDatas(q: String) {
+
         lifecycleScope.launchWhenCreated {
             viewModel.searchMovie(q).collectLatest {
                 searchMovieAdapter.submitData(it)
+
             }
         }
 

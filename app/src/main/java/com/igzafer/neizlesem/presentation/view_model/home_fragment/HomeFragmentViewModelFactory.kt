@@ -1,4 +1,4 @@
-package com.igzafer.neizlesem.presentation.view_model
+package com.igzafer.neizlesem.presentation.view_model.home_fragment
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -15,6 +15,7 @@ class HomeFragmentViewModelFactory(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTrendingWeeklyMoviesUseCase: GetTrendingWeeklyMoviesUseCase,
     private val getUpcomingMovieUseCase: GetUpcomingMovieUseCase,
+
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return HomeFragmentViewModel(

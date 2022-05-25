@@ -1,6 +1,5 @@
 package com.igzafer.neizlesem.data.model.movie.movie_details
 
-
 import com.google.gson.annotations.SerializedName
 
 data class BaseMovieDetailsModel(
@@ -29,7 +28,7 @@ data class BaseMovieDetailsModel(
     val productionCountries: List<ProductionCountry>,
     @SerializedName("release_date")
     val releaseDate: String,
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int,
     @SerializedName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage>,
