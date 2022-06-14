@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +15,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="saf"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation"
 
@@ -38,3 +38,4 @@
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:menu="@menu/main_nav" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -2,83 +2,78 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/splashScreen"
-    android:id="@+id/main_navigation">
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/homePageFragment"
-        tools:layout="@layout/fragment_home_page"
-        android:name="com.igzafer.neizlesem.presentation.view.HomePageFragment"
-        android:label="HomePageFragment" >
+        android:id="@+id/homeFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.tabview.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home_page">
         <action
-            android:id="@+id/action_homePageFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchPageFragment"
-        android:name="com.igzafer.neizlesem.presentation.view.SearchPageFragment"
-        android:label="fragment_search_page"
-        tools:layout="@layout/fragment_search_page" >
-        <action
-            android:id="@+id/action_searchPageFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/action_searchPageFragment_to_movieCategoryFragment"
-            app:destination="@id/movieCategoryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
-    <fragment
-        android:id="@+id/savedPageFragment"
-        android:name="com.igzafer.neizlesem.presentation.view.SavedPageFragment"
-        android:label="fragment_saved_page"
-        tools:layout="@layout/fragment_saved_page" >
-        <action
-            android:id="@+id/action_savedPageFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.igzafer.neizlesem.presentation.view.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/movieCategoryFragment"
-        android:name="com.igzafer.neizlesem.presentation.view.MovieCategoryFragment"
-        android:label="fragment_movie_category"
-        tools:layout="@layout/fragment_movie_category" >
-        <argument
-            android:name="CategoryModel"
-            app:argType="com.igzafer.neizlesem.data.model.category.CategoryModel" />
-        <action
-            android:id="@+id/action_movieCategoryFragment_to_movieDetailsFragment"
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.igzafer.neizlesem.presentation.view.MovieDetailsFragment"
-        android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_movie_details" >
+        android:name="com.igzafer.neizlesem.presentation.view.detailspage.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
         <argument
-            android:name="MovieModel"
-            app:argType="com.igzafer.neizlesem.data.model.movie.MoviesModel" />
+            android:name="movieId"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
-            android:id="@+id/action_movieDetailsFragment_to_movieCategoryFragment"
-            app:destination="@id/movieCategoryFragment" />
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
+            app:destination="@id/personDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/splashScreen"
-        android:name="com.igzafer.neizlesem.presentation.view.SplashScreen"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        android:id="@+id/savedFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.tabview.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved_page">
         <action
-            android:id="@+id/action_splashScreen_to_homePageFragment"
-            app:destination="@id/homePageFragment" />
+            android:id="@+id/action_savedFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/personDetailsFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.detailspage.PersonDetailsFragment"
+        android:label="fragment_person_details"
+        tools:layout="@layout/fragment_person_details">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_personDetailsFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.igzafer.neizlesem.presentation.view.tabview.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_searchPage"
+            app:destination="@id/searchPage"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchPage"
+        android:name="com.igzafer.neizlesem.presentation.view.page.SearchPage"
+        android:label="fragment_search_page"
+        tools:layout="@layout/fragment_search_page">
+        <action
+            android:id="@+id/action_searchPage_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_searchPage_to_personDetailsFragment"
+            app:destination="@id/personDetailsFragment" />
+    </fragment>
 </navigation>

@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/homePageFragment"
-        android:icon="@drawable/ic_popcorn"
+        android:id="@+id/homeFragment"
         android:contentDescription="Home"
+        android:icon="@drawable/ic_popcorn"
         android:iconTint="@color/color_selector"
-
-        android:title=""/>
-    <item
-        android:id="@+id/searchPageFragment"
-
-        android:icon="@drawable/ic_search"
-        android:contentDescription="Search"
-        android:iconTint="@color/color_selector"
-
-        android:title=""/>
-    <item
-        android:id="@+id/savedPageFragment"
-
-        android:icon="@drawable/ic_bookmark"
-        android:contentDescription="Saved"
-        android:iconTint="@color/color_selector"
-
 
         android:title="" />
+    <item
+        android:id="@+id/searchFragment"
+
+        android:contentDescription="Search"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/color_selector"
+
+        android:title=""
+        tools:ignore="DuplicateIds" />
+    <item
+        android:id="@+id/savedFragment"
+
+        android:contentDescription="Saved"
+        android:icon="@drawable/ic_bookmark"
+        android:iconTint="@color/color_selector"
+
+
+        android:title=""
+        tools:ignore="DuplicateIds" />
 </menu>

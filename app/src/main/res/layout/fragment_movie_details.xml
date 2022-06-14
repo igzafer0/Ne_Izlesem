@@ -1,216 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:background="@color/dark"
-
-    tools:context=".presentation.view.MovieDetailsFragment">
-
-    <RelativeLayout
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.igzafer.neizlesem.presentation.view_model.MovieDetailViewModel" />
+        <variable
+            name="MovieDetailsModel"
+            type="com.igzafer.neizlesem.domain.model.MovieDetailsModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        android:layout_height="wrap_content">
+        android:background="@color/dark">
 
         <RelativeLayout
-            android:id="@+id/framePoster"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager_slider"
+            <RelativeLayout
+                android:id="@+id/framePoster"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" />
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+
+                    android:foregroundGravity="bottom" />
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_alignBottom="@id/view_pager_slider"
-                android:background="@drawable/gradient" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignBottom="@id/view_pager_slider"
+                    android:background="@drawable/gradient" />
 
-            <ImageView
-                android:id="@+id/backButton"
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/darkTransMax"
+                    android:paddingEnd="5dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_back"
+                    tools:ignore="RtlSymmetry" />
+
+
+            </RelativeLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/saveButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> viewModel.saveButtonClick(MovieDetailsModel)}"
                 android:background="@drawable/round_button"
                 android:backgroundTint="@color/darkTransMax"
-                android:paddingEnd="5dp"
-                android:scaleType="center"
-                android:src="@drawable/ic_back"
-                tools:ignore="RtlSymmetry" />
-
-
-        </RelativeLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/saveButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/round_button"
-            android:backgroundTint="@color/darkTransMax"
-            android:tint="@color/white"
-            app:lottie_colorFilter="@color/white"
-            app:lottie_rawRes="@raw/save_animation" />
-
-        <TextView
-            android:id="@+id/pageTw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/saveButton"
-            android:singleLine="true"
-            android:layout_alignEnd="@id/saveButton"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/round"
-            android:backgroundTint="@color/darkTransMax"
-            android:fontFamily="@font/gilroybold"
-            android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="7dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/titleTw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/framePoster"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="-10dp"
-            android:fontFamily="@font/gilroybold"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@id/releaseTw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleTw"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/gilroylight"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-        <RelativeLayout
-            android:id="@+id/starRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/releaseTw"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/star"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_star" />
-
+                android:tint="@color/white"
+                app:lottie_colorFilter="@color/white"
+                app:lottie_rawRes="@raw/save_animation" />
             <TextView
-                android:id="@+id/rateTw"
+                android:id="@+id/pageTw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/star"
-                android:layout_alignBottom="@id/star"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/star"
-                android:fontFamily="@font/gilroylight"
-                android:gravity="center_vertical"
+                android:layout_below="@id/saveButton"
+                android:singleLine="true"
+                android:layout_alignEnd="@id/saveButton"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/round"
+                android:backgroundTint="@color/darkTransMax"
+                android:fontFamily="@font/gilroybold"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="7dp"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="12sp" />
-        </RelativeLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/categorySw"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/starRate"
-            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/titleTw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/framePoster"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="-10dp"
+                android:fontFamily="@font/gilroybold"
+                android:gravity="center"
+                android:text="@{MovieDetailsModel.title}"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
 
-            <LinearLayout
-                android:id="@+id/categoryLl"
+            <TextView
+                android:id="@id/releaseTw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleTw"
+                android:text="@{MovieDetailsModel.releaseDate}"
+
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/gilroylight"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:id="@+id/starRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp" />
-        </HorizontalScrollView>
+                android:layout_below="@id/releaseTw"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/categorySw"
-            android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_star" />
 
-            <TextView
+                <TextView
+                    android:id="@+id/rateTw"
+                    android:text="@{String.valueOf(MovieDetailsModel.voteAverage)}"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/star"
+                    android:layout_alignBottom="@id/star"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/star"
+                    android:fontFamily="@font/gilroylight"
+                    android:gravity="center_vertical"
+
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/categorySw"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="0dp"
-                android:fontFamily="@font/gilroybold"
-                android:text="Konusu:"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:layout_below="@id/starRate"
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/descTw"
+                <LinearLayout
+                    android:id="@+id/categoryLl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp" />
+            </HorizontalScrollView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/categorySw"
+                android:orientation="vertical">
 
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="0dp"
-                android:fontFamily="@font/gilroylight"
-                android:lineHeight="25dp"
-                android:textColor="@color/white"
-                android:textSize="16sp"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/gilroybold"
+                    android:text="Konusu:"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/descTw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{MovieDetailsModel.overview}"
+
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gilroylight"
+                    android:lineHeight="25dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/gilroybold"
+                    android:text="Oyuncular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/castRw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/gilroybold"
+                    android:text="Eğer bunu sevdiysen"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similarRw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="60dp" />
+            </LinearLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingLottie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dark"
+                android:visibility="gone"
+
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/anim_loading"
 
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="0dp"
-                android:fontFamily="@font/gilroybold"
-                android:text="Oyuncular"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/castRw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="60dp" />
-        </LinearLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loadingLottie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark"
-            android:visibility="gone"
-
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/anim_loading"
-
-            />
-
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

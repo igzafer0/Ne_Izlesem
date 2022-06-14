@@ -1,23 +1,14 @@
 package com.igzafer.neizlesem.presentation
 
 import android.app.Application
-import com.igzafer.neizlesem.data.util.WifiService
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
 class NeIzlesemApp : Application() {
-    companion object {
-        lateinit var instance:  NeIzlesemApp
-    }
-
     override fun onCreate() {
         super.onCreate()
-        instance = this
-
-        setupServices()
+        Timber.plant(Timber.DebugTree())
     }
 
-    private fun setupServices() {
-        WifiService.instance.initializeWithApplicationContext(this)
-    }
 }

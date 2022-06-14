@@ -1,68 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark"
-    android:orientation="vertical"
-    tools:context=".presentation.view.SearchPageFragment">
- <LinearLayout
-     android:layout_width="match_parent"
-     android:gravity="center_vertical"
-     android:layout_height="50dp"
-     android:orientation="horizontal"
-     android:layout_marginTop="30dp"
-     android:id="@+id/searchPageButton"
-     android:background="@drawable/round"
-     android:layout_marginHorizontal="10dp"
-     android:backgroundTint="@color/lightBlack"
-  >
-  <ImageView
-      android:layout_width="16dp"
-      android:layout_height="16dp"
-      android:layout_marginLeft="10dp"
-      android:src="@drawable/ic_search"
-      />
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_marginStart="20dp"
-      android:text="Bir seyler ara.."
-      android:fontFamily="@font/gilroybold"
-      android:textColor="@color/white"
-      android:textSize="14sp"
-      android:layout_height="wrap_content"/>
- </LinearLayout>
- <TextView
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:text="Popüler Aktörler"
-    android:layout_marginStart="10dp"
-     android:fontFamily="@font/gilroybold"
-     android:textColor="@color/white"
-     android:textSize="16sp"
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.igzafer.neizlesem.presentation.view_model.SearchPageViewModel" />
 
-     android:layout_marginTop="20dp"
-     />
- <androidx.recyclerview.widget.RecyclerView
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:id="@+id/popularActorRw"
-     />
- <TextView
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:text="Film türleri"
-     android:layout_marginStart="10dp"
-     android:fontFamily="@font/gilroybold"
-     android:textColor="@color/white"
-     android:textSize="16sp"
 
-     android:layout_marginTop="20dp"
-     />
- <androidx.recyclerview.widget.RecyclerView
+    </data>    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:orientation="vertical">
 
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:id="@+id/movieCategoryRw"
-     />
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/searchPageButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round"
+            android:backgroundTint="@color/lightBlack"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_back" />
+
+            <EditText
+                android:id="@+id/searchEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="45dp"
+                android:backgroundTint="@color/lightBlack"
+                android:fontFamily="@font/gilroybold"
+                android:hint="Bir seyler ara.."
+                android:singleLine="true"
+                android:text="@={viewModel.searchQuery}"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/removeEt"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="-35dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchRw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/notFoundLl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/notFound"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:tint="@color/white"
+                    app:lottie_colorFilter="@color/white"
+                    app:lottie_rawRes="@raw/not_found" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/gilroybold"
+                    android:gravity="center"
+                    android:text="Sonuç Bulunamadı"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingLottie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dark"
+                android:paddingBottom="200dp"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/anim_loading" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

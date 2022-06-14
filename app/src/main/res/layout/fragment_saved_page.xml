@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/dark"
-    tools:context=".presentation.view.SavedPageFragment">
-   <TextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="30dp"
-       android:layout_marginLeft="10dp"
-       android:fontFamily="@font/gilroybold"
-       android:textColor="@color/white"
-       android:text="Daha sonra izlemek\niçin kaydettiklerin"
-       android:textSize="24sp"
-       android:layout_marginBottom="10dp"
-       />
-   <androidx.recyclerview.widget.RecyclerView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/saved_rw"
-       />
+<layout xmlns:tools="http://schemas.android.com/tools">
 
-</LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/gilroybold"
+            android:text="Daha sonra izlemek\niçin kaydettiklerin"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/saved_rw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>
